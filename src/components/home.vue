@@ -1,17 +1,17 @@
 <template>
   <el-container>
     <el-header>
-      <el-col
-        :span="4"
-        class="logo"
-        :class="collapsed?'logo-collapse-width':'logo-width'"
-      >{{collapsed?'':sysName}}</el-col>
+      <el-col :span="4"
+              class="logo"
+              :class="collapsed?'logo-collapse-width':'logo-width'">{{collapsed?'':sysName}}</el-col>
       <el-col :span="10">
-        <div class="tools" @click.prevent="collapse">
+        <div class="tools"
+             @click.prevent="collapse">
           <i class="fa fa-align-justify"></i>
         </div>
       </el-col>
-      <el-col :span="4" class="userInfo">
+      <el-col :span="4"
+              class="userInfo">
         <el-dropdown>
           <span class="el-dropdown-link userInfo-inner">
             <img :src="this.sysUserAvatar" />
@@ -20,7 +20,8 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>我的消息</el-dropdown-item>
             <el-dropdown-item icon="el-icon-circle-plus">设置</el-dropdown-item>
-            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+            <el-dropdown-item divided
+                              @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-col>
@@ -30,45 +31,48 @@
         <!--侧边导航栏-->
         <!--default-active:当前激活菜单的 index-->
         <!--router:是否使用 vue-router 的模式，启用该模式会在激活导航时以 index 作为 path 进行路由跳转-->
-        <el-menu :default-active="$route.path" unique-opened router v-show="!collapsed">
-          <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-            <el-submenu :index="index+''" v-if="!item.leaf" :key="index">
+        <el-menu :default-active="$route.path"
+                 unique-opened
+                 router
+                 v-show="!collapsed">
+          <template v-for="(item,index) in $router.options.routes"
+                    v-if="!item.hidden">
+            <el-submenu :index="index+''"
+                        v-if="!item.leaf"
+                        :key="index">
               <template slot="title">
                 <i :class="item.iconCls"></i>
                 <span>{{item.name}}</span>
               </template>
-              <el-menu-item
-                v-for="child in item.children"
-                :index="child.path"
-                :key="child.path"
-                v-if="!child.hidden"
-              >{{child.name}}</el-menu-item>
+              <el-menu-item v-for="child in item.children"
+                            :index="child.path"
+                            :key="child.path"
+                            v-if="!child.hidden">{{child.name}}</el-menu-item>
             </el-submenu>
-            <el-menu-item
-              v-if="item.leaf&&item.children.length>0"
-              :index="item.children[0].path"
-              :key="index"
-            >
+            <el-menu-item v-if="item.leaf&&item.children.length>0"
+                          :index="item.children[0].path"
+                          :key="index">
               <i :class="item.iconCls"></i>
               <span>{{item.name}}</span>
             </el-menu-item>
           </template>
         </el-menu>
       </el-aside>
-      <el-container>
+      <el-container style="overflow-y: scroll;flex: 1;">
         <el-main>
-          <el-col :span="24" class="breadcrumb-container">
+          <el-col :span="24"
+                  class="breadcrumb-container">
             <strong class="title">{{$router.name}}</strong>
             <el-breadcrumb separator-class="el-icon-arrow-right">
-              <el-breadcrumb-item
-                v-for="item in $route.matched"
-                :key="item.path"
-                :to="{ path: item.path}"
-              >{{item.name}}</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="item in $route.matched"
+                                  :key="item.path"
+                                  :to="{ path: item.path}">{{item.name}}</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
-          <el-col :span="24" class="content-wrapper">
-            <transition name="fade" mode="out-in">
+          <el-col :span="24"
+                  class="content-wrapper">
+            <transition name="fade"
+                        mode="out-in">
               <router-view></router-view>
             </transition>
           </el-col>

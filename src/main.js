@@ -7,6 +7,7 @@ import App from './App'
 import router from './router'
 import Mock from './mock'
 import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-default/index.css'
 import 'font-awesome/css/font-awesome.min.css'
 
 Vue.config.productionTip = false
