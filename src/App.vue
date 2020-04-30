@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <transition name="fade"
-                mode="out-in">
+    <transition name="fade" mode="out-in">
       <router-view></router-view>
     </transition>
   </div>
@@ -40,6 +39,10 @@ body {
   text-align: inherit;
   line-height: inherit;
   background-color: #fff;
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .el-submenu [class^="fa"] {

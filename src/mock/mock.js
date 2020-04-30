@@ -1,6 +1,9 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { testUsers, users } from './data/user'
+import mockJS from 'mockjs'
+
+const Random = mockJS.Random
 let _users = users
 
 const mock = new MockAdapter(axios)
@@ -33,6 +36,40 @@ export default {
           }, 1000)
         })
       })
+
+    // 提交用户信息编辑
+    mock.onPost('user/userEdit').reply(
+      config => {
+        let { id, userName, userId, address, birthday } = JSON.parse(config.data)
+
+        return new Promise((resolve, reject) => {
+          if (id == null) {
+            // 新增
+            _users.push({
+              id: Random.id(),
+              userName,
+              userId,
+              address,
+              birthday
+            })
+          } else {
+            _users.some(user => {
+              if (user.id === id) {
+                user.id = id
+                user.userName = userName
+                user.userId = userId
+                user.address = address
+                user.birthday = birthday
+                return true
+              }
+              return false
+            })
+          }
+
+          resolve([200, { code: 200, msg: '人员信息保存成功' }])
+        })
+      }
+    )
 
     // 获取用户列表
     mock.onGet('/user/list').reply(
@@ -71,10 +108,25 @@ export default {
       }
     )
 
-    // 编辑用户信息
-
     // 删除用户
+    mock.onPost('user/userRemove').reply(config => {
+      let { id } = JSON.parse(config.data)
+      return new Promise((resolve, reject) => {
+        _users.splice(_users.findIndex(user =>
+          user.id === id
+        ), 1)
+        resolve([200, { code: 200, msg: '人员信息删除成功' }])
+      })
+    })
 
     // 批量删除用户
+    mock.onPost('user/userBatchRemove').reply(config => {
+      let { id } = JSON.parse(config.data)
+      id = id.split(',')
+      return new Promise((resolve, reject) => {
+        _users = _users.filter(u => !id.includes(u.id))
+        resolve([200, { code: 200, msg: '人员信息批量删除成功' }])
+      })
+    })
   }
 }

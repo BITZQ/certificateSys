@@ -19,7 +19,7 @@ for (let i = 0; i < userCount; i++) {
     id: Random.id(),
     userName: Random.cname(),
     userId: Random.email(),
-    address: Random.province() + '-' + Random.city(),
+    address: mock.mock('@county(true)'),
     birthday: Random.date('yyyy-MM-dd')
   })
 }
